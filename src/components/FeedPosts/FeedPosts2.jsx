@@ -29,10 +29,10 @@ const FeedPosts2 = () => {
 			{!isLoading && events.length > 0 && events.map((event) => <FeedPost2 key={event.id} event={event} />)}
 			{!isLoading && events.length === 0 && (
 				<>
-					<Text fontSize={"md"} color={"red.400"}>
-						Dayuum. Looks like you don&apos;t have any friends.
+					<Text fontSize={"md"} color={"red.400"} align={"center"}>
+						Dayuum. Looks Like there is no event currently available
 					</Text>
-					<Text color={"red.400"}>Stop coding and go make some friends!!</Text>
+					<Text color={"white.400"} align={"center"}>Don&apos;t stop exploring </Text>
 				</>
 			)}
 		</Container>

@@ -16,11 +16,11 @@ const useGetFeedevents = () => {
 	useEffect(() => {
 		const getFeedEvents = async () => {
 			setIsLoading(true);
-			if (authUser.following.length === 0) {
-				setIsLoading(false);
-				setEvents([]);
-				return;
-			}
+			// if (authUser.following.length === 0) {
+			// 	setIsLoading(false);
+			// 	setEvents([]);
+			// 	return;
+			// }
             const q = collection(firestore, "events");
 
 			try {

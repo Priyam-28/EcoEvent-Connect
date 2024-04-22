@@ -1,9 +1,10 @@
-import  { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Box, Button, CloseButton, Flex, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Textarea, Tooltip, useDisclosure } from "@chakra-ui/react";
 import usePreviewImg from "../../hooks/usePreviewImg";
 import useShowToast from "../../hooks/useShowToast";
 import useCreateEvent from "../../hooks/useCreateEvent";
 import { BsFillImageFill } from "react-icons/bs";
+import { CreatePostLogo } from '../../assets/constants';
 
 export default function CreateEvent() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,7 +34,7 @@ export default function CreateEvent() {
         <>
             <Tooltip
                 hasArrow
-                label={"Create"}
+                label={"Create Event"}
                 placement='right'
                 ml={1}
                 openDelay={500}
@@ -49,7 +50,8 @@ export default function CreateEvent() {
                     justifyContent={{ base: "center", md: "flex-start" }}
                     onClick={onOpen}
                 >
-                    <Box display={{ base: "none", md: "block" }}>Create</Box>
+                    <CreatePostLogo />
+                    <Box display={{ base: "none", md: "block" }}>Create Event</Box>
                 </Flex>
             </Tooltip>
 
@@ -59,6 +61,7 @@ export default function CreateEvent() {
                     <ModalHeader>Organise Event</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
+
                         <Input placeholder='Event Name' size='md' value={inputs.title} onChange={(e) => setInputs({ ...inputs, title: e.target.value })} />
                         <br /><br />
                         <Textarea
@@ -67,12 +70,48 @@ export default function CreateEvent() {
                             size='lg'
                             onChange={(e) => setInputs({ ...inputs, description: e.target.value })}
                         />
+                        
+                        
+                        <Flex gap={"5px"} align={"center"} mt={"30px"}>
+                            To:
+                            <Input
+                                placeholder='From'
+                                size='md'
+                                type='date'
+                                value={inputs.from}
+                                onChange={(e) => setInputs({ ...inputs, from: e.target.value })}
+                            />
+                            From:
+                            <Input
+                                placeholder='To'
+                                size='md'
+                                type='date'
+                                value={inputs.to}
+                                onChange={(e) => setInputs({ ...inputs, to: e.target.value })}
+                            />
+                            
+
+                        </Flex>
+                        <br />
+                        <Select
+                                placeholder='Select Event Cause'
+                                value={inputs.cause}
+                                onChange={(e) => setInputs({ ...inputs, cause: e.target.value })}
+                            >
+                                <option value='Fund Raise'>Fund Raiser</option>
+                                <option value='Clean & Green Environment'>Clean & Green Environment</option>
+                                <option value='Donations'>Donations</option>
+                                <option value='Connecting People'>Connecting People</option>
+                            </Select>
+                            <Flex align={"center"} >
+                        
                         <Input type='file' hidden ref={imageRef} onChange={handleImageChange} />
                         <BsFillImageFill
                             onClick={() => imageRef.current.click()}
                             style={{ marginTop: "15px", marginLeft: "5px", cursor: "pointer" }}
-                            size={16}
+                            size={20}
                         />
+                        
                         {selectedFile && (
                             <Flex mt={5} w={"full"} position={"relative"} justifyContent={"center"}>
                                 <Image src={selectedFile} alt='Selected img' />
@@ -86,30 +125,9 @@ export default function CreateEvent() {
                                 />
                             </Flex>
                         )}
-                        <Input
-                            placeholder='From'
-                            size='md'
-                            type='date'
-                            value={inputs.from}
-                            onChange={(e) => setInputs({ ...inputs, from: e.target.value })}
-                        />
-                        <Input
-                            placeholder='To'
-                            size='md'
-                            type='date'
-                            value={inputs.to}
-                            onChange={(e) => setInputs({ ...inputs, to: e.target.value })}
-                        />
-                        <Select
-                            placeholder='Select Event Cause'
-                            value={inputs.cause}
-                            onChange={(e) => setInputs({ ...inputs, cause: e.target.value })}
-                        >
-                            <option value='Fund Raise'>Fund Raiser</option>
-                            <option value='Clean & Green Environment'>Clean & Green Environment</option>
-                            <option value='Donations'>Donations</option>
-                            <option value='Connecting People'>Connecting People</option>
-                        </Select>
+                            
+                        </Flex>
+
                     </ModalBody>
                     <ModalFooter>
                         <Button mr={3} onClick={handleEventCreation} isLoading={isLoading}>

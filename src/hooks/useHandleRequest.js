@@ -1,35 +1,14 @@
-// import React from 'react'
-
-import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { addDoc, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { useState } from "react";
 import { firestore } from "../firebase/firebase";
 import useAuthStore from "../store/authStore";
 import useShowToast from "./useShowToast";
 
-export default function useHandleRequest(eventId, userId) {
+export default function useHandleRequest() {
     const [isLoading, setIsLoading] = useState(false);
     const authUser = useAuthStore((state) => state.user);
     const showToast = useShowToast();
 
-    // const [request,setRequest]=useState();
-
-    // useEffect(() => {
-    //     // Function to fetch requests for the event from Firestore
-    //     const fetchRequests = async () => {
-    //         const requestsRef = collection(firestore, 'requests');
-    //         const q = query(requestsRef, where('eventId', '==', eventId));
-    //         const querySnapshot = await getDocs(q);
-    //         const requestList = [];
-    //         querySnapshot.forEach((doc) => {
-    //             requestList.push({ id: doc.id, ...doc.data() });
-    //         });
-    //         setRequest(requestList);
-    //     };
-
-    //     fetchRequests(); // Call the function to fetch requests when eventId changes
-    // }, [eventId]); // useEffect will re-run whenever eventId changes
-
-    // Function to handle request submission
     const handleRequestContribution = async (to, eventId) => {
         if (isLoading) return;
         setIsLoading(true);
@@ -53,8 +32,10 @@ export default function useHandleRequest(eventId, userId) {
                 approval: "pending"
             };
     
-            await addDoc(collection(firestore, "requests"), newRequest);
+            const newRequestRef = await addDoc(collection(firestore, "requests"), newRequest);
+            // Add the request ID to the user's document
             const userDocRef = doc(firestore, "users", authUser.uid);
+            await updateDoc(userDocRef, { requests: arrayUnion(newRequestRef.id) });
     
             showToast("success", "Contribution request submitted successfully!", "success");
         } catch (error) {
@@ -65,8 +46,6 @@ export default function useHandleRequest(eventId, userId) {
         }
     };
     
-
-    // Function to handle accepting a request
     const handleAcceptRequest = async (requestId) => {
         try {
             // Update the status of the request to 'accepted' in Firestore
@@ -79,7 +58,6 @@ export default function useHandleRequest(eventId, userId) {
         }
     };
 
-    // Function to handle rejecting a request
     const handleRejectRequest = async (requestId) => {
         try {
             // Update the status of the request to 'rejected' in Firestore
@@ -91,5 +69,6 @@ export default function useHandleRequest(eventId, userId) {
             console.error('Error rejecting request:', error);
         }
     };
-    return { handleRequestContribution, handleRejectRequest, handleAcceptRequest }
+
+    return { handleRequestContribution, handleRejectRequest, handleAcceptRequest };
 }
