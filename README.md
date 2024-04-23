@@ -1,7 +1,10 @@
-# Fullstack Instagram Clone Tutorial
+
 
 ### Built With React, Firebase && Chakra UI
+To run just clone the repo
 
-# [Tutorial](https://youtu.be/bQtAg7AFFrY)
+run these commands
+npm install
+npm run dev
 
-![Screenshot of App](https://i.ibb.co/PjkYLCk/Group-34.png)
+
