@@ -1,6 +1,7 @@
 # EcoEvent Connect
 
-![EcoEvent Connect](./path/to/your/Screenshot%202024-07-28%20153635.png)
+![EcoEvent Connect](public/Screenshot%202024-07-28%20153635.png)
+
 
 ## Overview
 EcoEvent Connect is a web application designed to facilitate the creation and management of eco-friendly events. It provides a platform for users to create events, search for events, receive notifications, and manage their profiles. The app is built with modern web technologies to ensure a smooth and responsive user experience.
