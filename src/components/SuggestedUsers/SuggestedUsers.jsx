@@ -1,4 +1,4 @@
-import { Box, Flex, Link, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, Text, VStack } from "@chakra-ui/react";
 import SuggestedHeader from "./SuggestedHeader";
 import SuggestedUser from "./SuggestedUser";
 import useGetSuggestedUsers from "../../hooks/useGetSuggestedUsers";
@@ -30,9 +30,7 @@ const SuggestedUsers = () => {
 
 			<Box fontSize={12} color={"gray.500"} mt={5} alignSelf={"start"}>
 				© 2024 Built By{" "}
-				<Link href='https://github.com/Priyam-28' target='_blank' color='blue.500' fontSize={14}>
-					Priyam
-				</Link>
+				
 			</Box>
 		</VStack>
 	);
