@@ -19,12 +19,14 @@ import { collection, getDocs, query, where, doc, getDoc } from "firebase/firesto
 import { firestore } from "../../firebase/firebase";
 import useShowToast from "../../hooks/useShowToast";
 import useAuthStore from "../../store/authStore";
+import useHandleRequest from "../../hooks/useHandleRequest";
 
 const Notifications = () => {
     const [requests, setRequests] = useState([]);
     const authUser = useAuthStore((state) => state.user);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const showToast = useShowToast();
+	const {handleAcceptRequest}=useHandleRequest();
 
     useEffect(() => {
         if (isOpen) {
@@ -84,6 +86,10 @@ const Notifications = () => {
             showToast("error", error.message, "error");
         }
     };
+	const handleAcceptClick = () => {
+        
+        handleAcceptRequest(requests[0].id); 
+    };
 
     return (
         <>
@@ -117,11 +123,11 @@ const Notifications = () => {
                     <ModalBody pb={6}>
                         {requests.map((request) => (
                             <Box key={request.id} mb={4}>
-                                <Box fontWeight="bold">{request.eventName}</Box>
+                                <Box fontWeight="bold">Event Name:{request.eventName}</Box>
                                 <Box fontWeight="medium">Request by: {request.userName}</Box>
                                 {/* Include other properties of the request as needed */}
                                 <Flex gap={"5px"}>
-                                    <IoMdCheckmarkCircle size={25} color="green" />
+                                    <IoMdCheckmarkCircle size={25} color="green" onClick={handleAcceptClick}/>
                                     <SlClose size={25} color="red" />
                                 </Flex>
                             </Box>

@@ -4,7 +4,7 @@
 To run just clone the repo
 
 run these commands
-npm install
+npm install <br>
 npm run dev
 
 

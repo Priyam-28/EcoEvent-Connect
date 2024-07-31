@@ -52,7 +52,12 @@ export default function useHandleRequest() {
             const requestDocRef = doc(firestore, 'requests', requestId);
             await updateDoc(requestDocRef, { status: 'accepted' });
             // Optionally, perform any other actions (e.g., notify user)
-            alert('Request accepted successfully!');
+            const userDocRef=doc(firestore, 'users', authUser.uid);
+			// await updateDoc(userDocRef, { contributions: arrayUnion(requestDocRef.id) });
+            await updateDoc(userDocRef, { [`contributors.services`]: arrayUnion(requestDocRef.id) });
+
+
+            showToast("success","Request accepted successfully!","success");
         } catch (error) {
             console.error('Error accepting request:', error);
         }
